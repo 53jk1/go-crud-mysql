@@ -16,6 +16,10 @@ type Employee struct {
 	City string
 }
 
+const (
+	httpMovedPerm = 301
+)
+
 func dbConn() (db *sql.DB) {
 	dbDriver := "mysql"
 	dbUser := os.Getenv("DBUSER")
@@ -117,7 +121,7 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 		log.Println("INSERT: Name: " + name + " | City: " + city)
 	}
 	defer db.Close()
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", httpMovedPerm)
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
@@ -134,7 +138,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		log.Println("UPDATE: Name: " + name + " | City: " + city)
 	}
 	defer db.Close()
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", httpMovedPerm)
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
@@ -147,11 +151,11 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	delForm.Exec(emp)
 	log.Println("DELETE")
 	defer db.Close()
-	http.Redirect(w, r, "/", 301)
+	http.Redirect(w, r, "/", httpMovedPerm)
 }
 
 func main() {
-	log.Println("Server started on: http://localhost:8080")
+	log.Println("Server started on: http://localhost:8082")
 	http.HandleFunc("/", Index)
 	http.HandleFunc("/show", Show)
 	http.HandleFunc("/new", New)
@@ -159,5 +163,5 @@ func main() {
 	http.HandleFunc("/insert", Insert)
 	http.HandleFunc("/update", Update)
 	http.HandleFunc("/delete", Delete)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
