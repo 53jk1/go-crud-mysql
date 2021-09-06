@@ -13,7 +13,7 @@ mysql> CREATE TABLE `Employee` (
     -> `name` varchar(30) NOT NULL,
     -> `city` varchar(30) NOT NULL,
     -> PRIMARY KEY (`id`));
-    ```
+```
 
 Run the following command:
 ```
